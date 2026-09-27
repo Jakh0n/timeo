@@ -33,3 +33,21 @@ export const SHIFT_STATUS_LABEL: Record<ShiftStatus, string> = {
   GENERATED: "Generated",
   CONFIRMED: "Confirmed",
 };
+
+export function shiftStatusBadgeVariant(
+  status: ShiftStatus,
+): "outline" | "default" | "secondary" | "success" {
+  if (status === "COLLECTING") {
+    return "default";
+  }
+
+  if (status === "CONFIRMED") {
+    return "success";
+  }
+
+  if (status === "GENERATED") {
+    return "secondary";
+  }
+
+  return "outline";
+}

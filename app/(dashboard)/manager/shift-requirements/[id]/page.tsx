@@ -1,7 +1,11 @@
-export default function ShiftRequirementPage() {
-  return (
-    <p className="max-w-md text-sm leading-6 text-muted-foreground">
-      This schedule will open here.
-    </p>
-  );
+import { ShiftRequirementDetail } from "@/components/dashboard/shift-requirement-detail";
+
+export default async function ManagerShiftRequirementPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+
+  return <ShiftRequirementDetail requirementId={id} />;
 }
