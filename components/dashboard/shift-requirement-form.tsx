@@ -47,7 +47,7 @@ const count = (message: string) =>
     .min(0, "Use 0 or more.")
     .max(50, "Use 50 or fewer.");
 
-const shiftRequirementSchema = z
+export const shiftRequirementSchema = z
   .object({
     branchId: z.string().min(1, "Choose a branch."),
     cycleLabel: z
@@ -83,9 +83,9 @@ const shiftRequirementSchema = z
     path: ["maxSeniorPerShift"],
   });
 
-type ShiftRequirementValues = z.infer<typeof shiftRequirementSchema>;
+export type ShiftRequirementValues = z.infer<typeof shiftRequirementSchema>;
 
-const COUNT_FIELDS = [
+export const COUNT_FIELDS = [
   { name: "weekdayDayRequired", label: "Weekday day shift" },
   { name: "weekdayNightRequired", label: "Weekday night shift" },
   { name: "weekendDayRequired", label: "Weekend day shift" },
