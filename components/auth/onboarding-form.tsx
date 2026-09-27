@@ -41,7 +41,7 @@ export function OnboardingForm() {
     mutationFn: createOrganization,
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: currentUserQueryKey });
-      router.push("/dashboard");
+      router.push("/manager/dashboard");
     },
   });
 

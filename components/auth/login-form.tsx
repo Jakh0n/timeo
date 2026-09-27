@@ -42,7 +42,7 @@ export function LoginForm() {
     mutationFn: loginAccount,
     onSuccess: async (result) => {
       await queryClient.invalidateQueries({ queryKey: currentUserQueryKey });
-      router.push(result.hasOrganization ? "/dashboard" : "/onboarding");
+      router.push(result.hasOrganization ? "/manager/dashboard" : "/onboarding");
     },
   });
 

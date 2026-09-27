@@ -6,6 +6,10 @@ export type AuthUser = {
   email: string;
   role: "OWNER" | "MANAGER";
   hasOrganization: boolean;
+  organization: {
+    id: string;
+    name: string;
+  } | null;
 };
 
 export type AuthResult = {

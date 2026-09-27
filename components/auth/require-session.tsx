@@ -27,7 +27,7 @@ function nextPath(
       return "/login";
     }
 
-    return hasOrganization ? "/dashboard" : "/onboarding";
+    return hasOrganization ? "/manager/dashboard" : "/onboarding";
   }
 
   if (mode === "guest") {
@@ -35,7 +35,7 @@ function nextPath(
       return null;
     }
 
-    return hasOrganization ? "/dashboard" : "/onboarding";
+    return hasOrganization ? "/manager/dashboard" : "/onboarding";
   }
 
   if (mode === "onboarding") {
@@ -43,7 +43,7 @@ function nextPath(
       return "/login";
     }
 
-    return hasOrganization ? "/dashboard" : null;
+    return hasOrganization ? "/manager/dashboard" : null;
   }
 
   if (unauthenticated) {

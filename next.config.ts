@@ -6,6 +6,15 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.dirname(fileURLToPath(import.meta.url)),
   },
+  async redirects() {
+    return [
+      {
+        source: "/dashboard",
+        destination: "/manager/dashboard",
+        permanent: false,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
