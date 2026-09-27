@@ -148,7 +148,7 @@ export function ShiftRequirementDetail({
         </div>
         {data.status === "DRAFT" ? (
           <p className="mt-3 text-sm leading-6 text-muted-foreground">
-            The link is ready. Workers can use it after you start collecting.
+            Workers can open this link now. Start collecting when you want it marked as open.
           </p>
         ) : null}
         {data.status === "COLLECTING" ? (
