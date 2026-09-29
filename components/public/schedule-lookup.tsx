@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
+import { Search } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -108,6 +109,7 @@ export function ScheduleLookup({
             )}
           />
           <Button type="submit" className="h-10 w-full" disabled={schedule.isFetching}>
+            <Search />
             {schedule.isFetching ? "Checking…" : "Check schedule"}
           </Button>
         </form>

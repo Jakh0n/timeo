@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { LogIn } from "lucide-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -110,6 +111,7 @@ export function LoginForm() {
           <p className="text-sm text-destructive">{formError}</p>
         ) : null}
         <Button type="submit" className="h-10 w-full" disabled={login.isPending}>
+          <LogIn />
           {login.isPending ? "Logging in…" : "Log in"}
         </Button>
       </form>

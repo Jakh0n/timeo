@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -79,6 +80,7 @@ export function OnboardingForm() {
         ) : null}
         <Button type="submit" className="h-10 w-full" disabled={create.isPending}>
           {create.isPending ? "Saving…" : "Continue to dashboard"}
+          <ArrowRight />
         </Button>
       </form>
     </Form>

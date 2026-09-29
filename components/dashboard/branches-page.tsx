@@ -2,9 +2,12 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Check, Pencil, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { EmptyState } from "@/components/dashboard/empty-state";
+import { PageIntro } from "@/components/dashboard/page-intro";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -153,6 +156,7 @@ function BranchFormDialog({
                 Cancel
               </Button>
               <Button type="submit" disabled={save.isPending}>
+                <Check />
                 {save.isPending ? "Saving…" : "Save"}
               </Button>
             </DialogFooter>
@@ -184,17 +188,21 @@ export function BranchesPage() {
   });
 
   return (
-    <div className="flex max-w-3xl flex-col gap-6">
-      <div className="flex justify-end">
-        <Button
-          onClick={() => {
-            setEditing(null);
-            setEditorOpen(true);
-          }}
-        >
-          Add branch
-        </Button>
-      </div>
+    <div className="flex w-full flex-col gap-6">
+      <PageIntro
+        description="Each branch is one location. Schedules are built for that team."
+        action={
+          <Button
+            onClick={() => {
+              setEditing(null);
+              setEditorOpen(true);
+            }}
+          >
+            <Plus />
+            Add branch
+          </Button>
+        }
+      />
 
       {branches.isPending ? (
         <p className="text-sm text-muted-foreground">Loading branches…</p>
@@ -215,13 +223,15 @@ export function BranchesPage() {
       ) : null}
 
       {branches.isSuccess && branches.data.length === 0 ? (
-        <p className="text-sm leading-6 text-muted-foreground">
-          No branches yet. Add the first location to start scheduling.
-        </p>
+        <EmptyState
+          title="No branches yet"
+          description="Add the first location. You can collect availability and build a schedule after that."
+        />
       ) : null}
 
       {branches.isSuccess && branches.data.length > 0 ? (
-        <Table>
+        <div className="overflow-hidden rounded-xl border border-border">
+          <Table>
           <TableHeader>
             <TableRow>
               <TableHead>Name</TableHead>
@@ -247,6 +257,7 @@ export function BranchesPage() {
                       setEditorOpen(true);
                     }}
                   >
+                    <Pencil />
                     Edit
                   </Button>
                   <Button
@@ -257,13 +268,15 @@ export function BranchesPage() {
                       setPendingDelete(branch);
                     }}
                   >
+                    <Trash2 />
                     Delete
                   </Button>
                 </TableCell>
               </TableRow>
             ))}
-          </TableBody>
-        </Table>
+            </TableBody>
+          </Table>
+        </div>
       ) : null}
 
       <BranchFormDialog
@@ -312,6 +325,7 @@ export function BranchesPage() {
                 }
               }}
             >
+              <Trash2 />
               {remove.isPending ? "Deleting…" : "Delete"}
             </Button>
           </DialogFooter>

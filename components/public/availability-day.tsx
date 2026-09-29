@@ -1,3 +1,4 @@
+import { Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   hourLabel,
@@ -117,6 +118,7 @@ export function AvailabilityDay({
                     });
                   }}
                 >
+                  <Trash2 />
                   Remove
                 </Button>
               ) : null}
@@ -137,7 +139,8 @@ export function AvailabilityDay({
               });
             }}
           >
-            + add another window
+            <Plus />
+            Add another window
           </Button>
         </div>
       ) : null}

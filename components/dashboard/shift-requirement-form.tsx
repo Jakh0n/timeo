@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Plus, Store } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -170,7 +171,10 @@ export function ShiftRequirementForm({
               Add a branch before you create a shift requirement.
             </p>
             <Button asChild>
-              <Link href="/manager/branches">Add your first branch</Link>
+              <Link href="/manager/branches">
+                <Store />
+                Add your first branch
+              </Link>
             </Button>
           </div>
         ) : (
@@ -274,6 +278,7 @@ export function ShiftRequirementForm({
                   Cancel
                 </Button>
                 <Button type="submit" disabled={create.isPending || !hasBranches}>
+                  <Plus />
                   {create.isPending ? "Creating…" : "Create"}
                 </Button>
               </DialogFooter>

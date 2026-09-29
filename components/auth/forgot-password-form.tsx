@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { Send } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -59,6 +60,7 @@ export function ForgotPasswordForm() {
         />
         {notice ? <p className="text-sm text-muted-foreground">{notice}</p> : null}
         <Button type="submit" className="h-10 w-full">
+          <Send />
           Send reset link
         </Button>
       </form>

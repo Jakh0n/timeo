@@ -1,9 +1,12 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
+import { Plus } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { EmptyState } from "@/components/dashboard/empty-state";
+import { PageIntro } from "@/components/dashboard/page-intro";
 import { ShiftRequirementForm } from "@/components/dashboard/shift-requirement-form";
 import { ShiftStatusBadge } from "@/components/dashboard/shift-status-badge";
 import { Button } from "@/components/ui/button";
@@ -53,16 +56,20 @@ export function ShiftRequirementsPage() {
   });
 
   return (
-    <div className="flex max-w-4xl flex-col gap-6">
-      <div className="flex justify-end">
-        <Button
-          onClick={() => {
-            setCreating(true);
-          }}
-        >
-          New Shift Requirement
-        </Button>
-      </div>
+    <div className="flex w-full flex-col gap-6">
+      <PageIntro
+        description="A shift requirement is one week at one branch. It creates the link you send to the team."
+        action={
+          <Button
+            onClick={() => {
+              setCreating(true);
+            }}
+          >
+            <Plus />
+            New shift requirement
+          </Button>
+        }
+      />
 
       {requirements.isPending ? (
         <p className="text-sm text-muted-foreground">Loading shift requirements…</p>
@@ -83,13 +90,15 @@ export function ShiftRequirementsPage() {
       ) : null}
 
       {requirements.isSuccess && requirements.data.length === 0 ? (
-        <p className="text-sm leading-6 text-muted-foreground">
-          No shift requirements yet. Create one to get a link for the team.
-        </p>
+        <EmptyState
+          title="No shift requirements yet"
+          description="Create one for a branch. You get a link, staff send availability, then you confirm the week."
+        />
       ) : null}
 
       {requirements.isSuccess && requirements.data.length > 0 ? (
-        <Table>
+        <div className="overflow-hidden rounded-xl border border-border">
+          <Table>
           <TableHeader>
             <TableRow>
               <TableHead>Branch</TableHead>
@@ -135,8 +144,9 @@ export function ShiftRequirementsPage() {
                 </TableRow>
               );
             })}
-          </TableBody>
-        </Table>
+            </TableBody>
+          </Table>
+        </div>
       ) : null}
 
       <ShiftRequirementForm open={creating} onOpenChange={setCreating} />

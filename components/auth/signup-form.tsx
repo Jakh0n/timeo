@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { UserPlus } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -118,6 +119,7 @@ export function SignupForm() {
           <p className="text-sm text-destructive">{formError}</p>
         ) : null}
         <Button type="submit" className="h-10 w-full" disabled={signup.isPending}>
+          <UserPlus />
           {signup.isPending ? "Creating account…" : "Create account"}
         </Button>
       </form>

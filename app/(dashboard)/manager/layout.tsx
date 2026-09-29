@@ -14,6 +14,11 @@ import type { ReactNode } from "react";
 import { RequireSession } from "@/components/auth/require-session";
 import { Button } from "@/components/ui/button";
 import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
@@ -55,6 +60,22 @@ function pageTitle(pathname: string): string {
   return match?.label ?? "Overview";
 }
 
+function initials(name: string): string {
+  const parts = name.trim().split(/\s+/).filter((part) => part.length > 0);
+
+  if (parts.length === 0) {
+    return "?";
+  }
+
+  const first = parts[0]?.[0] ?? "";
+  const last =
+    parts.length > 1
+      ? (parts[parts.length - 1]?.[0] ?? "")
+      : (parts[0]?.[1] ?? "");
+
+  return `${first}${last}`.toUpperCase();
+}
+
 function ManagerFrame({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
@@ -80,7 +101,10 @@ function ManagerFrame({ children }: { children: ReactNode }) {
   return (
     <SidebarProvider>
       <Sidebar collapsible="icon">
-        <SidebarHeader className="flex-row items-center gap-1 px-3 py-4 group-data-[collapsible=icon]:justify-center">
+        <SidebarHeader className="flex-row items-center gap-2 px-3 py-4 group-data-[collapsible=icon]:justify-center">
+          <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary text-xs font-medium text-primary-foreground group-data-[collapsible=icon]:hidden">
+            {organizationName.slice(0, 1).toUpperCase()}
+          </span>
           <p className="min-w-0 flex-1 truncate text-sm font-medium group-data-[collapsible=icon]:hidden">
             {organizationName}
           </p>
@@ -104,28 +128,39 @@ function ManagerFrame({ children }: { children: ReactNode }) {
             ))}
           </SidebarMenu>
         </SidebarContent>
-        <SidebarFooter className="gap-3 px-3 py-4">
-          {manager ? (
-            <div className="min-w-0 group-data-[collapsible=icon]:hidden">
-              <p className="truncate text-sm font-medium">{manager.name}</p>
-              <p className="truncate text-sm text-muted-foreground">
-                {manager.email}
-              </p>
-            </div>
-          ) : null}
-          <Button
-            variant="ghost"
-            className="h-9 w-full justify-start px-2 group-data-[collapsible=icon]:size-8 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0"
-            disabled={logout.isPending}
-            onClick={() => {
-              logout.mutate();
-            }}
-          >
-            <LogOut />
-            <span className="group-data-[collapsible=icon]:hidden">
-              {logout.isPending ? "Logging out…" : "Log out"}
-            </span>
-          </Button>
+        <SidebarFooter className="border-t border-sidebar-border px-3 py-3">
+          <div className="flex items-center gap-2 group-data-[collapsible=icon]:justify-center">
+            {manager ? (
+              <>
+                <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-sidebar-accent text-xs font-medium text-sidebar-accent-foreground group-data-[collapsible=icon]:hidden">
+                  {initials(manager.name)}
+                </span>
+                <div className="min-w-0 flex-1 group-data-[collapsible=icon]:hidden">
+                  <p className="truncate text-sm font-medium">{manager.name}</p>
+                  <p className="truncate text-xs text-muted-foreground">
+                    {manager.email}
+                  </p>
+                </div>
+              </>
+            ) : null}
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="size-8 shrink-0"
+                  aria-label={logout.isPending ? "Logging out" : "Log out"}
+                  disabled={logout.isPending}
+                  onClick={() => {
+                    logout.mutate();
+                  }}
+                >
+                  <LogOut />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent side="right">Log out</TooltipContent>
+            </Tooltip>
+          </div>
         </SidebarFooter>
       </Sidebar>
       <SidebarInset>

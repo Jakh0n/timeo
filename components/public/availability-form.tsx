@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { Send } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -291,6 +292,7 @@ export function AvailabilityForm({
             className="h-10 w-full"
             disabled={submit.isPending}
           >
+            <Send />
             {submit.isPending
               ? "Saving…"
               : editing

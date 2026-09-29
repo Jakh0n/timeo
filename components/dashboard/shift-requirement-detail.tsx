@@ -1,6 +1,7 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { CalendarClock, Check, Copy, Pencil, RotateCcw, Send } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { ScheduleBoard } from "@/components/dashboard/schedule-board";
@@ -134,6 +135,7 @@ function ShareLink({ url }: { url: string }) {
           );
         }}
       >
+        {copied ? <Check /> : <Copy />}
         {copied ? "Copied" : "Copy link"}
       </Button>
       {copyError ? <p className="mt-3 text-sm text-destructive">{copyError}</p> : null}
@@ -156,6 +158,7 @@ function StaffingSummary({
         <h3 className="text-base font-medium">Staffing</h3>
         {canEdit ? (
           <Button type="button" variant="outline" onClick={onEdit}>
+            <Pencil />
             Edit
           </Button>
         ) : null}
@@ -314,7 +317,7 @@ export function ShiftRequirementDetail({
   const stageIsCurrent = stage === data.status;
 
   return (
-    <div className="flex max-w-3xl flex-col gap-8">
+    <div className="flex w-full flex-col gap-8">
       <div className="space-y-2">
         <Link href="/manager/shift-requirements" className="text-sm text-primary">
           All shift requirements
@@ -355,6 +358,7 @@ export function ShiftRequirementDetail({
                   collect.mutate();
                 }}
               >
+                <Send />
                 {collect.isPending ? "Starting…" : "Start collecting availability"}
               </Button>
               {collect.error ? (
@@ -384,6 +388,7 @@ export function ShiftRequirementDetail({
                   generate.mutate();
                 }}
               >
+                <CalendarClock />
                 {generate.isPending ? "Generating…" : "Generate schedule"}
               </Button>
               {generate.error ? (
@@ -409,6 +414,7 @@ export function ShiftRequirementDetail({
                   confirm.mutate();
                 }}
               >
+                <Check />
                 {confirm.isPending ? "Confirming…" : "Confirm and finalize"}
               </Button>
               {confirm.error ? (
@@ -436,6 +442,7 @@ export function ShiftRequirementDetail({
                   reopen.mutate();
                 }}
               >
+                <RotateCcw />
                 {reopen.isPending ? "Reopening…" : "Reopen for editing"}
               </Button>
               {reopen.error ? (
